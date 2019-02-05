@@ -1,0 +1,66 @@
+<button (click)="toHome()">Back</button>
+<!--<p>yeet {{FENString}}</p> -->
+
+<div>
+  <div class="row">
+    <div class="showBoard col-md-8" style="text-align: center" [style.display]="this.boardDisplay">
+
+      <div class='total_board'>
+        <div class='game_board'>
+          <div class='gameRow' *ngFor="let row of game.board; let i=index">
+            <div class='square' (click)="selectSquare(i,j)" *ngFor='let sq of row; let j=index' [style.background-color]='game.board[j][i].squareColor'>
+              <img class="piece"  [style.opacity]="this.setOpacity(i,j)"  src="/src/assets/{{game.board[j][i].color}}{{game.board[j][i].type}}.png">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gameNav">
+        <button (click)="gameNav(-2)" [disabled]="FENIndex == 0" >&lt;&lt;</button>
+        <button (click)="gameNav(-1)" [disabled]="FENIndex == 0">&lt;</button>
+        <button (click)="gameNav(1)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;</button>
+        <button (click)="gameNav(2)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;&gt;</button>
+      </div>
+
+      <p *ngIf="this.game.BCheck == true" class="check">Check on Black King! </p>
+      <p *ngIf="this.game.WCheck == true" class="check">Check on White King! </p>
+      <input [(ngModel)]='FENString' type='text'>
+      <button (click)="submitFENString()">submit FEN</button>
+
+    </div>
+    <div  class="col-md-4 sideBar" style="text-align: center">
+
+      <div style="height: 33%"></div>
+
+      <div class="border border-primary rounded align-middle">
+        <div class="whiteGraveyard"> 
+          <div class="whitePieceGraveyard">
+            <img class="smallPiece" *ngFor="let piece of game.whitePieceGraveyard" src="/src/assets/W{{piece.type}}.png">
+          </div>
+          <div class="whitePawnGraveyard">
+            <img class="smallPiece" *ngFor="let piece of game.whitePawnGraveyard" src="/src/assets/WP.png">
+          </div>
+        </div>
+
+        <p *ngIf= "clockTime !== null">{{clockTime}}|{{addedTime}}</p>
+
+        <timer [addedTime]="addedTime" [clockTime]="clockTime" [timerOn]="timerOn" [timerChar]="timerChar" [winner]="game.winner"></timer>
+
+        <div class="blackGraveyard"> 
+          <div class="blackPawnGraveyard">
+            <img class="smallPiece" *ngFor="let piece of game.blackPawnGraveyard" src="/src/assets/BP.png">
+          </div>
+          <div class="blackPieceGraveyard">
+            <img class="smallPiece" *ngFor="let piece of game.blackPieceGraveyard" src="/src/assets/B{{piece.type}}.png">
+          </div>
+        </div>
+      </div>
+
+      <div style="height: 33%"></div>
+      
+    </div>
+  </div>
+</div>
+
+<promotionDialogue [style.display]="this.promoDialogueDisplay" (selectedPromotionEvent)="this.receivePromoChar($event)" [whiteTurnPromo]="this.game.whiteTurn"></promotionDialogue> 
+<winnerDialogue [style.display]="this.winnerDialogueDisplay" [winner]="this.game.winner" (resetBool)="this.resetGame($event)"></winnerDialogue>

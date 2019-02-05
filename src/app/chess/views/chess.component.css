@@ -1,0 +1,59 @@
+@import '~bootstrap/dist/css/bootstrap-reboot.min.css';
+@import '~bootstrap/dist/css/bootstrap-grid.min.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.row{
+    flex-wrap: nowrap;
+}
+
+div.gameRow{
+    display: inline-block;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+div.square{
+    height: 100px;
+    width: 100px;
+    border:  black solid;
+}
+
+img.piece{
+    height: 70px;
+    width: 70px;
+    box-sizing: unset;
+    padding: 10px;
+}
+
+img.smallPiece{
+    height: 40px;
+    width: 40px;
+    padding: 0px;
+}
+
+div.promotionDialogueBox{
+    border: 2px solid black;
+    background-color: skyblue;
+    width: 53%;
+}
+
+div.promotionDialogueBox p{
+    text-align: center;
+    font-size: 32px;
+    font-family: serif;
+    font: bold;
+}
+
+div.picturesBox{
+    padding-left: 25px;
+    margin-bottom: 25px;
+}
+
+div.picturesBox img{
+    border: 2px solid black;
+    margin-left: 25px;
+}
+
+div.sideBar{
+    padding-right: 15px;
+}
