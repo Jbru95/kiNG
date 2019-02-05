@@ -4,6 +4,7 @@
 
 .row{
     flex-wrap: nowrap;
+    height: 1080px;
 }
 
 div.gameRow{
@@ -73,3 +74,20 @@ div.picturesBox img{
     vertical-align: middle;
     font-size: 6.5em;
 }
+
+.table{
+    text-align: center;
+    vertical-align: middle;
+}
+
+th.mat-header-cell{
+    text-align: center;
+    z-index: 2;
+    border-bottom: thick black;
+}
+
+.moveTableContainer{
+    height: 95%;
+    overflow: auto;
+}
+
