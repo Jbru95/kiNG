@@ -58,3 +58,18 @@ div.picturesBox img{
     padding-right: 10%;
     padding-left: 10%;
 }
+
+.timerContainer{
+    display: block;
+
+}
+
+.blackTimer{
+    vertical-align: middle;
+    font-size: 6.5em;
+}
+
+.whiteTimer{
+    vertical-align: middle;
+    font-size: 6.5em;
+}

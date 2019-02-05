@@ -21,10 +21,14 @@ export class timerComponent implements OnChanges{
     whiteInterval: any;
     blackInterval: any;
     timeStart: boolean = false;
+    wColor: string;
+    bColor: string;
     
 
     constructor(){
         this.whiteSeconds = undefined;
+        this.wColor ='red';
+        this.bColor ='red';
     }
 
     ngOnChanges(){
@@ -44,6 +48,8 @@ export class timerComponent implements OnChanges{
 
     startBlackTime(){
         if(this.timerOn == true && this.timerChar=="B"){
+            this.wColor = 'red';
+            this.bColor = 'green';
             clearInterval(this.whiteInterval);
             this.blackInterval = setInterval( interval => this.incrementTime("B"), 1000);
         }
@@ -51,6 +57,8 @@ export class timerComponent implements OnChanges{
 
     startWhiteTime(){
         if(this.timerOn==true && this.timerChar=="W"){
+            this.wColor = 'green';
+            this.bColor = 'red';
             clearInterval(this.blackInterval);
             this.whiteInterval = setInterval( interval => this.incrementTime("W"), 1000);
         }
@@ -68,8 +76,19 @@ export class timerComponent implements OnChanges{
     }
 
     updateDisplayTime(): void{
-        this.whiteTimeDisplay = (Math.floor(this.whiteSeconds/60).toString() + ":" + (this.whiteSeconds%60).toString());
-        this.blackTimeDisplay = (Math.floor(this.blackSeconds/60).toString() + ":" + (this.blackSeconds%60).toString());
+        if (this.whiteSeconds%60 != 0) {
+            this.whiteTimeDisplay = (Math.floor(this.whiteSeconds/60).toString() + ":" + (this.whiteSeconds%60).toString());
+        }
+        else {
+            this.whiteTimeDisplay = (Math.floor(this.whiteSeconds/60).toString() + ":00");
+        }
+        
+        if (this.blackSeconds%60 != 0) {
+            this.blackTimeDisplay = (Math.floor(this.blackSeconds/60).toString() + ":" + (this.blackSeconds%60).toString());
+        }
+        else {
+            this.blackTimeDisplay = (Math.floor(this.blackSeconds/60).toString() + ":00");
+        }
     }
 
 }

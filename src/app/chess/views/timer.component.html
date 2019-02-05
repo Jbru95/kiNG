@@ -1,6 +1,12 @@
-<div>
+<div class="timerContainer">
 
-<p>white: {{whiteTimeDisplay}}  |  black: {{blackTimeDisplay}}</p>
+    <div class="blackTimer border rounded" [ngStyle]="{'background-color': bColor}">
+        <p>{{blackTimeDisplay}}</p>
+    </div>
+
+    <div class="whiteTimer border rounded" [ngStyle]="{'background-color': wColor}">
+        <p>{{whiteTimeDisplay}}</p>
+    </div>
 
 </div>
 

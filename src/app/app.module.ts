@@ -9,6 +9,7 @@ import { winnerDialogueComponent } from './chess/components/winnerDialogue.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule } from '@angular/material/radio';
 import { timerComponent } from './chess/components/timer.component';
+import { MoveTableComponent } from './chess/components/moveTable.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { timerComponent } from './chess/components/timer.component';
     ChessComponent,
     promotionDialogueComponent,
     winnerDialogueComponent,
-    timerComponent
+    timerComponent,
+    MoveTableComponent
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,7 @@
     </div>
     <div  class="col-md-4 sideBar" style="text-align: center">
 
-      <div style="height: 33%"></div>
+      <div style="height: 27%"></div>
 
       <div class="border border-primary rounded align-middle">
         <div class="whiteGraveyard"> 
@@ -41,8 +41,6 @@
             <img class="smallPiece" *ngFor="let piece of game.whitePawnGraveyard" src="/src/assets/WP.png">
           </div>
         </div>
-
-        <p *ngIf= "clockTime !== null">{{clockTime}}|{{addedTime}}</p>
 
         <timer [addedTime]="addedTime" [clockTime]="clockTime" [timerOn]="timerOn" [timerChar]="timerChar" [winner]="game.winner"></timer>
 
@@ -56,7 +54,7 @@
         </div>
       </div>
 
-      <div style="height: 33%"></div>
+      <div style="height: 39%"></div>
 
     </div>
   </div>
