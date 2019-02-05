@@ -54,6 +54,7 @@ div.picturesBox img{
     margin-left: 25px;
 }
 
-div.sideBar{
-    padding-right: 15px;
+.container-fluid{
+    padding-right: 10%;
+    padding-left: 10%;
 }
