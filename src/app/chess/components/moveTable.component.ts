@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, Input, ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material';
 
 export interface MoveTableRow {
     turn: number;
@@ -23,7 +24,32 @@ const TestData: MoveTableRow[] = [
     styleUrls: ['../views/chess.component.css']
 })
 
-export class MoveTableComponent{
-    dataSource = TestData;
+export class MoveTableComponent implements OnChanges{
+    
+    @Input() nextObj: MoveTableRow;
+    @ViewChild(MatTable) table: MatTable<MoveTableRow>;
+
+    dataSource: MoveTableRow[] = [];
     displayedColumns: string[] = ['turn', 'wMove', 'bMove'];
+
+
+    constructor(){
+        this.dataSource = [];
+    }
+
+    ngOnChanges(){
+        if ( this.nextObj != undefined ) {
+            if ( this.dataSource.length == 0 ) {
+                this.dataSource.push(this.nextObj);    
+            }
+            else if ( this.dataSource[0].bMove == null ) {
+                this.dataSource[0].bMove = this.nextObj.bMove;
+            }
+            else {
+                this.dataSource.push(this.nextObj);   
+            }
+            this.dataSource.sort((obj1, obj2) => obj2.turn - obj1.turn);
+            this.table.renderRows();
+        }
+    }
 }

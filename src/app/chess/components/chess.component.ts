@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Form, SelectMultipleControlValueAccessor } from '@angular/forms';
 import { Time } from '../../../../node_modules/@angular/common';
 import { ModeEnum } from '../mode.enum';
+import { MoveTableRow } from './moveTable.component';
 
 @Component({
   selector: 'app-chess',
@@ -13,6 +14,7 @@ import { ModeEnum } from '../mode.enum';
 export class ChessComponent implements OnChanges{
 
   @Output() backEmitStr= new EventEmitter<string>();
+  @Input() nextObj: MoveTableRow;
   @Input() modeSelection: number;
   @Input() chessDisplay: string;
   @Input() clockTime: number = undefined;
@@ -30,6 +32,7 @@ export class ChessComponent implements OnChanges{
   promoDialogueDisplay = "none";
   winnerDialogueDisplay= "none";
   boardDisplay = "block";
+  takenFlag = false;
   promoInfo = {
     color: null,
     x: null,
@@ -164,6 +167,7 @@ export class ChessComponent implements OnChanges{
     this.game.board[this.promoInfo.x][this.promoInfo.y] = new Piece(this.promoInfo.y, this.promoInfo.x, this.promoInfo.type, this.promoInfo.color);
 
     if(this.promoInfo.color == "W"){
+      let secondCopy = this.second;
       this.second = [null,null];
       this.game.whiteTurn = false;
       
@@ -175,6 +179,7 @@ export class ChessComponent implements OnChanges{
       else{
 
         if(this.game.takenPiece !== null){ //if a piece it taken
+          this.takenFlag = true;
           this.game.takenPiece.type == "P" ? this.game.blackPawnGraveyard.push(this.game.takenPiece) : this.game.blackPieceGraveyard.push(this.game.takenPiece); //addi it to piece graveyard
           this.game.takenPiece = null; //reset taken piece to null
         }
@@ -182,6 +187,7 @@ export class ChessComponent implements OnChanges{
         this.game.WCheck = false; //else of CHeckSafeWKing, so WK is safe, turn off Wcheck
         this.game.checkSetCastleBools();
         this.game.genPushFENString();
+        this.sendNextRowObj(secondCopy);
         this.FENIndex = this.game.FENPositionStack.length-1;
         console.log(this.game.FENPositionStack);
         this.timerChar = "B";
@@ -197,6 +203,7 @@ export class ChessComponent implements OnChanges{
     }
 
     else{
+      let secondCopy = this.second;
       this.second = [null,null];
       this.game.whiteTurn = true;
 
@@ -208,6 +215,7 @@ export class ChessComponent implements OnChanges{
       else{
 
         if(this.game.takenPiece !== null){ //if a piece it taken
+          this.takenFlag = true;
           this.game.takenPiece.type == "P" ? this.game.whitePawnGraveyard.push(this.game.takenPiece) : this.game.whitePieceGraveyard.push(this.game.takenPiece); //add it to piece graveyard
           this.game.takenPiece = null; //reset taken piece to null
         }
@@ -215,7 +223,9 @@ export class ChessComponent implements OnChanges{
         this.game.BCheck = false; //else of CHeckSafeWKing, so BK is safe, turn off Bcheck
         this.game.checkSetCastleBools();
         this.game.genPushFENString();
-        this.timerChar = "W"
+        this.sendNextRowObj(secondCopy);
+        this.timerChar = "W";
+        this.game.turnCounter += 1;
         this.FENIndex = this.game.FENPositionStack.length-1;
         console.log(this.game.FENPositionStack);
         if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
@@ -229,8 +239,6 @@ export class ChessComponent implements OnChanges{
       }
     }
   }
-
-
 
   selectSquare(i,j){
     console.log(this.game.board[j][i]);
@@ -290,6 +298,7 @@ export class ChessComponent implements OnChanges{
           }
 
           else{
+            let secondCopy = this.second;
             this.second = [null,null];
             this.game.whiteTurn = false;
             
@@ -301,6 +310,7 @@ export class ChessComponent implements OnChanges{
             else{
 
               if(this.game.takenPiece !== null){ //if a piece it taken
+                this.takenFlag = true;
                 this.game.takenPiece.type == "P" ? this.game.blackPawnGraveyard.push(this.game.takenPiece) : this.game.blackPieceGraveyard.push(this.game.takenPiece); //addi it to piece graveyard
                 this.game.takenPiece = null; //reset taken piece to null
               }
@@ -308,6 +318,7 @@ export class ChessComponent implements OnChanges{
               this.game.WCheck = false; //else of CHeckSafeWKing, so WK is safe, turn off Wcheck
               this.game.checkSetCastleBools();
               this.game.genPushFENString();
+              this.sendNextRowObj(secondCopy);
               this.timerChar = "B";
               this.FENIndex = this.game.FENPositionStack.length-1;
               console.log(this.game.FENPositionStack);
@@ -373,6 +384,7 @@ export class ChessComponent implements OnChanges{
           }
 
           else{
+            let secondCopy = this.second;
             this.second = [null,null];
             this.game.whiteTurn = true;
             console.log("in else", "checking game.checksafeking, result: ", this.game.checkSafeBKing());
@@ -384,6 +396,7 @@ export class ChessComponent implements OnChanges{
             else{
 
               if(this.game.takenPiece !== null){ //if a piece it taken
+                this.takenFlag = true;
                 this.game.takenPiece.type == "P" ? this.game.whitePawnGraveyard.push(this.game.takenPiece) : this.game.whitePieceGraveyard.push(this.game.takenPiece); //add it to piece graveyard
                 this.game.takenPiece = null; //reset taken piece to null
               }
@@ -391,7 +404,9 @@ export class ChessComponent implements OnChanges{
               this.game.BCheck = false; //else of CHeckSafeWKing, so BK is safe, turn off Bcheck
               this.game.checkSetCastleBools();
               this.game.genPushFENString();
+              this.sendNextRowObj(secondCopy);
               this.timerChar = "W";
+              this.game.turnCounter += 1;
               this.FENIndex = this.game.FENPositionStack.length-1;
               console.log(this.game.FENPositionStack);
               if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
@@ -423,6 +438,40 @@ export class ChessComponent implements OnChanges{
 
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  sendNextRowObj(secondCopy): void{
+    const fileArray = ['a','b','c','d','e','f','g','h'];
+    const rankArray = ['8','7','6','5','4','3','2','1'];
+    let move: string = "";
+    const tableObj = {
+      turn: this.game.turnCounter,
+      wMove: null,
+      bMove: null
+    };
+
+
+    if( this.game.castleFlag != null ) {
+      move = this.game.castleFlag[1] + ' O-O';
+    }
+    else if ( this.game.board[secondCopy[1]][secondCopy[0]]) {
+      move += this.game.board[secondCopy[1]][secondCopy[0]].type;
+      if ( this.takenFlag == true ) {
+        move += 'x'
+      }
+      move += fileArray[secondCopy[0]];
+      move += rankArray[secondCopy[1]];
+    }
+
+    if (this.game.whiteTurn == false ) { // its now blacks turn so put this as whites move
+      tableObj.wMove = move;
+    }
+    else {
+      tableObj.bMove = move;
+    }
+
+    this.takenFlag = false;
+    this.nextObj = tableObj;
   }
 }
 

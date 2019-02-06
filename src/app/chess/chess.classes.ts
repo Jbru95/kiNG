@@ -1,7 +1,4 @@
-import { forEach } from "../../../node_modules/@angular/router/src/utils/collection";
-import { IfStmt, identifierModuleUrl, ThrowStmt } from "../../../node_modules/@angular/compiler";
-import { CloneVisitor } from "../../../node_modules/@angular/compiler/src/i18n/i18n_ast";
-import { isDefaultChangeDetectionStrategy } from "../../../node_modules/@angular/core/src/change_detection/constants";
+import { MoveTableRow } from './components/moveTable.component';
 
 export class Game {
 
@@ -12,7 +9,7 @@ export class Game {
     BCheck = false;
     WCheck = false;
     FENPositionStack = new Array<string>();
-    turnCounter: number = 0;
+    turnCounter: number = 1;
     promotionTimeBool: boolean = false;
     winner: string = null;
 
