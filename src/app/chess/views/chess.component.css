@@ -91,3 +91,6 @@ th.mat-header-cell{
     overflow: auto;
 }
 
+.highlightSpan{
+    background-color: #777777;
+}

@@ -28,9 +28,11 @@ export class MoveTableComponent implements OnChanges{
     
     @Input() nextObj: MoveTableRow;
     @ViewChild(MatTable) table: MatTable<MoveTableRow>;
+    @Input() currentRowObj: any;
 
     dataSource: MoveTableRow[] = [];
     displayedColumns: string[] = ['turn', 'wMove', 'bMove'];
+    lastObj: MoveTableRow;
 
 
     constructor(){
@@ -38,7 +40,9 @@ export class MoveTableComponent implements OnChanges{
     }
 
     ngOnChanges(){
-        if ( this.nextObj != undefined ) {
+
+        if ( this.nextObj != undefined && this.nextObj != this.lastObj ) {
+
             if ( this.dataSource.length == 0 ) {
                 this.dataSource.push(this.nextObj);    
             }
@@ -50,6 +54,7 @@ export class MoveTableComponent implements OnChanges{
             }
             this.dataSource.sort((obj1, obj2) => obj2.turn - obj1.turn);
             this.table.renderRows();
+            this.lastObj = this.nextObj;
         }
     }
 }

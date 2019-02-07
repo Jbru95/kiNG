@@ -8,12 +8,31 @@
 
         <ng-container matColumnDef="wMove">
             <th mat-header-cell *matHeaderCellDef>White Move</th>
-            <td mat-cell *matCellDef="let element">{{element.wMove}}</td>
+            <td mat-cell *matCellDef="let element">
+                <!--<span *ngIf="element.turn == currentRowTurn && whiteMovedLast" class="highlightSpan">{{element.wMove}}</span>
+                <span *ngIf="element.turn != currentRowTurn">{{element.wMove}}</span>-->
+                <ng-container *ngIf="element.turn == currentRowObj.turn && currentRowObj.whiteMovedLast; else elseTemplate">
+                    <span class="highlightSpan">{{element.wMove}}</span>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <span>{{element.wMove}}</span>
+                </ng-template>
+                
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="bMove">
             <th mat-header-cell *matHeaderCellDef>Black Move</th>
-            <td mat-cell *matCellDef="let element">{{element.bMove}}</td>
+            <td mat-cell *matCellDef="let element">
+                <!-- <span *ngIf="element.turn == currentRowTurn && !whiteMovedLast " class="highlightSpan">{{element.bMove}}</span>
+                <span *ngIf="element.turn != currentRowTurn">{{element.bMove}}</span> -->
+                <ng-container *ngIf="element.turn == currentRowObj.turn && !currentRowObj.whiteMovedLast; else else2Template">
+                    <span class="highlightSpan">{{element.bMove}}</span>
+                </ng-container>
+                <ng-template #else2Template>
+                    <span>{{element.bMove}}</span>
+                </ng-template>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

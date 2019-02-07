@@ -21,6 +21,8 @@ export class ChessComponent implements OnChanges{
   @Input() addedTime: number;
   @Input() resetFromWinnerDialogue: boolean;
   @Input() onePlayerColor: string = "W";
+  currentRowTurn: number;
+  currentRowObj: any;
   FENIndex: number;
   AIMode: boolean = true;
   game: Game;
@@ -83,18 +85,38 @@ export class ChessComponent implements OnChanges{
     if(command == -2){ //beginning
       this.FENIndex = 0;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
+      this.currentRowObj = {
+        turn : 0,
+        whiteMovedLast : false
+      }
+
     }
     else if(command == -1){ // back one
       this.FENIndex = this.FENIndex - 1;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
+      let FENString = this.game.FENPositionStack[this.FENIndex];
+      this.currentRowObj = {
+        turn : parseInt(FENString.charAt(FENString.length - 1)),
+        whiteMovedLast : !FENString.includes(' w ')
+      }
     }
     else if (command == 1){ //forward one
       this.FENIndex = this.FENIndex + 1;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
+      let FENString = this.game.FENPositionStack[this.FENIndex];
+      this.currentRowObj = {
+        turn : parseInt(FENString.charAt(FENString.length - 1)),
+        whiteMovedLast : !FENString.includes(' w ')
+      }
     }
     else if (command == 2){ //end
       this.FENIndex = this.game.FENPositionStack.length - 1;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
+      let FENString = this.game.FENPositionStack[this.FENIndex];
+      this.currentRowObj = {
+        turn : parseInt(FENString.charAt(FENString.length - 1)),
+        whiteMovedLast : !FENString.includes(' w ')
+      }
     }
   }
 
@@ -469,6 +491,11 @@ export class ChessComponent implements OnChanges{
     else {
       tableObj.bMove = move;
     }
+
+    this.currentRowObj = {
+      turn: tableObj.turn,
+      whiteMovedLast: tableObj.bMove == null
+    };
 
     this.takenFlag = false;
     this.nextObj = tableObj;
