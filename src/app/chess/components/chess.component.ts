@@ -23,7 +23,7 @@ export class ChessComponent implements OnChanges{
   @Input() onePlayerColor: string = "W";
   currentRowTurn: number;
   currentRowObj: any;
-  FENIndex: number;
+  FENIndex: number = 0;
   AIMode: boolean = true;
   game: Game;
   selected: Array<number> = [null, null];
@@ -82,6 +82,7 @@ export class ChessComponent implements OnChanges{
   }
 
   gameNav(command: number){
+    console.log(this.FENIndex);
     if(command == -2){ //beginning
       this.FENIndex = 0;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);

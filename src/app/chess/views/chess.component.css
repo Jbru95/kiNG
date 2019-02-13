@@ -89,6 +89,7 @@ th.mat-header-cell{
 .moveTableContainer{
     height: 95%;
     overflow: auto;
+    background-color: white;
 }
 
 .highlightSpan{

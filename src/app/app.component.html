@@ -3,43 +3,47 @@
 <p> FEN: {{FENString}} </p>
 <app-chess [FENString] = "FENString"></app-chess> -->
 
-<div class="setupDisplay" [style.display]="setupDisplay">
+<div class="container-fluid">
+    <div class="row">
+        <div class="setupDisplay mat-elevation-z5 col-md-12" style="text-align: center" [style.display]="setupDisplay">
 
-    <h1> Welcome to KiNG </h1>
+            <h1> Welcome to Ki<span style="color: red">NG</span> </h1>
 
-    <form>
-        <h2>Settings</h2>
+            <form>
+                <h2>Settings</h2>
 
-        <div class="form-group">
-            <label for="clockTime">Clock Time per Side(Minutes):  </label>
-            <select [(ngModel)]="settingsModel.clockTime" name="clockTime" id='clockTime'>
-                <option *ngFor="let time of clockTimeArray" [value]='time'>{{time}}</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="addedTime">Time Added Per Move(Seconds):  </label>
-            <select [(ngModel)]='settingsModel.addedTime' name="addedTime" id='addedTime'>
-                <option *ngFor="let time of addedTimeArray" [value]='time'>{{time}}</option>
-            </select>
-        </div>
-
-        <p>{{settingsModel.clockTime}}|{{settingsModel.addedTime}}</p>
-        <div class="form-group">
-            <mat-radio-group [(ngModel)]="settingsModel.mode" name="mode">
-                <label>2 Player Mode: </label>
-                <mat-radio-button value='0'></mat-radio-button>
+                <div class="form-group" style="display: inline-block">
+                    <label for="clockTime">Clock Time per Side(Minutes):  </label>
+                    <select class="form-control" [(ngModel)]="settingsModel.clockTime" name="clockTime" id='clockTime'>
+                        <option *ngFor="let time of clockTimeArray" [value]='time'>{{time}}</option>
+                    </select>
+                </div>
                 <p></p>
-                <p></p>
-                <label>1 Player Mode: </label> 
-                <mat-radio-button value="1">Easy </mat-radio-button>
-                <mat-radio-button value="2">Medium </mat-radio-button>
-                <mat-radio-button value="3">Hard </mat-radio-button>
-            </mat-radio-group>
-        </div>
+                <div style="display: inline-block">
+                    <label for="addedTime">Time Added Per Move(Seconds):  </label>
+                    <select class="form-control" [(ngModel)]='settingsModel.addedTime' name="addedTime" id='addedTime'>
+                        <option *ngFor="let time of addedTimeArray" [value]='time'>{{time}}</option>
+                    </select>
+                </div>
 
-        <button class="btn" (click)="startGame()">Start Game!</button>
-    </form>
+                <h5 style="margin-top: 15px;">Current Time Settings: {{settingsModel.clockTime}}|{{settingsModel.addedTime}}</h5>
+                <div class="form-group">
+                    <mat-radio-group [(ngModel)]="settingsModel.mode" name="mode">
+                        <label>2 Player Mode: </label>
+                        <mat-radio-button value='0'></mat-radio-button>
+                        <p></p>
+                        <p></p>
+                        <label>1 Player Mode: </label> 
+                        <mat-radio-button value="1">Easy </mat-radio-button>
+                        <mat-radio-button value="2">Medium </mat-radio-button>
+                        <mat-radio-button value="3">Hard </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <button class="btn btn-primary" (click)="startGame()">Start Game!</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div [style.display]="chessDisplay">

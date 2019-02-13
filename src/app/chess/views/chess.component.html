@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="showBoard col-md-8" style="text-align: center" [style.display]="this.boardDisplay">
+    <div class="showBoard col-md-8" style="text-align: center; margin: 10px" [style.display]="this.boardDisplay">
 
       <div class='total_board'>
         <div class='game_board'>
@@ -15,17 +15,17 @@
         </div>
       </div>
 
-      <div class="gameNav">
-        <button (click)="gameNav(-2)" [disabled]="FENIndex == 0" >&lt;&lt;</button>
-        <button (click)="gameNav(-1)" [disabled]="FENIndex == 0">&lt;</button>
-        <button (click)="gameNav(1)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;</button>
-        <button (click)="gameNav(2)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;&gt;</button>
+      <div class="gameNav btn-group">
+        <button class="btn btn-primary" (click)="gameNav(-2)" [disabled]="FENIndex == 0" >&lt;&lt;</button>
+        <button class="btn btn-primary" (click)="gameNav(-1)" [disabled]="FENIndex == 0">&lt;</button>
+        <button class="btn btn-primary" (click)="gameNav(1)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;</button>
+        <button class="btn btn-primary" (click)="gameNav(2)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;&gt;</button>
       </div>
 
       <p *ngIf="this.game.BCheck == true" class="check">Check on Black King! </p>
       <p *ngIf="this.game.WCheck == true" class="check">Check on White King! </p>
-      <input [(ngModel)]='FENString' type='text'>
-      <button (click)="submitFENString()">submit FEN</button>
+      <!--<input [(ngModel)]='FENString' type='text'>
+      <button (click)="submitFENString()">submit FEN</button>-->
 
     </div>
     <div  class="col-md-4 sideBar" style="text-align: center">
