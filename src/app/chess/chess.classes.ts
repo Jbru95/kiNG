@@ -146,14 +146,16 @@ export class Game {
 
         //en passant logic also needs to be done
 
-        this.turnCounter = parseInt(fenAry[2])
+        this.turnCounter = parseInt(fenAry[3])
+        console.log("fenAry", fenAry);
+        console.log('turncounter on chess.classes.ts', this.turnCounter);
         console.log(this.board);
 
     }
 
     genPushFENString(){
         //"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-        //"r3k2r/8/8/8/7n/8/R3K2R/8 w KQkq"
+        //"r3k2r/8/8/8/7n/8/R3K2R/8 w KQkq 12"
         let FENString = "";
 
         for(let i = 0; i < this.board.length; i++){

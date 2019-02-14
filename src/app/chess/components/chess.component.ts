@@ -43,6 +43,7 @@ export class ChessComponent implements OnChanges{
   }
   timerOn: boolean = false;
   timerChar: string = null;
+  fastForwardMoveTableBool = false;
 
   constructor(private router: Router) { 
     this.game = new Game();
@@ -109,15 +110,19 @@ export class ChessComponent implements OnChanges{
         turn : parseInt(FENString.charAt(FENString.length - 1)),
         whiteMovedLast : !FENString.includes(' w ')
       }
+      console.log(this.currentRowObj);
+      this.fastForwardMoveTableBool = true;
     }
     else if (command == 2){ //end
       this.FENIndex = this.game.FENPositionStack.length - 1;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
       let FENString = this.game.FENPositionStack[this.FENIndex];
       this.currentRowObj = {
-        turn : parseInt(FENString.charAt(FENString.length - 1)),
+        turn : this.game.whiteTurn == true ? parseInt(FENString.charAt(FENString.length - 1)) + 1 : parseInt(FENString.charAt(FENString.length - 1)),
         whiteMovedLast : !FENString.includes(' w ')
       }
+      console.log(this.currentRowObj);
+      this.fastForwardMoveTableBool = true;
     }
   }
 
@@ -135,7 +140,6 @@ export class ChessComponent implements OnChanges{
   }
 
   /**
-   * 
    * @param mode configureMode
    * function to configure the game whether it is in 1 or 2 player mode and what difficulty the AI will be
    */
@@ -214,6 +218,7 @@ export class ChessComponent implements OnChanges{
         this.FENIndex = this.game.FENPositionStack.length-1;
         console.log(this.game.FENPositionStack);
         this.timerChar = "B";
+        this.fastForwardMoveTableBool = false;
         if(this.game.checkCheckmate("B") == true){ //check to see if black is checkmated
           this.game.winner = "W";
           this.winnerDialogueDisplay = "block";
@@ -250,6 +255,7 @@ export class ChessComponent implements OnChanges{
         this.timerChar = "W";
         this.game.turnCounter += 1;
         this.FENIndex = this.game.FENPositionStack.length-1;
+        this.fastForwardMoveTableBool = false;
         console.log(this.game.FENPositionStack);
         if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
           this.game.winner = "B";
@@ -264,6 +270,9 @@ export class ChessComponent implements OnChanges{
   }
 
   selectSquare(i,j){
+    if( this.FENIndex != this.game.FENPositionStack.length - 1 || (this.FENIndex == 0 && this.game.FENPositionStack.length == 0) ) { //only accept a move if the game is up to the current level
+      return null;
+    }
     console.log(this.game.board[j][i]);
     if( this.selected[0]=== null && this.selected[1] ===null){// if nothing is selected, select the clicked square
       if( (this.game.whiteTurn == true && this.game.board[j][i].color =='W') || (this.game.whiteTurn == false && this.game.board[j][i].color == "B")){//only select your own pieces
@@ -345,6 +354,7 @@ export class ChessComponent implements OnChanges{
               this.timerChar = "B";
               this.FENIndex = this.game.FENPositionStack.length-1;
               console.log(this.game.FENPositionStack);
+              this.fastForwardMoveTableBool = false;
               if(this.game.checkCheckmate("B") == true){ //check to see if black is checkmated
                 this.game.winner = "W";
                 this.winnerDialogueDisplay = "block";
@@ -431,6 +441,7 @@ export class ChessComponent implements OnChanges{
               this.timerChar = "W";
               this.game.turnCounter += 1;
               this.FENIndex = this.game.FENPositionStack.length-1;
+              this.fastForwardMoveTableBool = false;
               console.log(this.game.FENPositionStack);
               if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
                 this.game.winner = "B";
@@ -473,6 +484,10 @@ export class ChessComponent implements OnChanges{
       bMove: null
     };
 
+    if( this.fastForwardMoveTableBool == true) {
+      tableObj.turn = this.currentRowObj.turn;
+    }
+
 
     if( this.game.castleFlag != null ) {
       move = this.game.castleFlag[1] + ' O-O';
@@ -497,7 +512,7 @@ export class ChessComponent implements OnChanges{
       turn: tableObj.turn,
       whiteMovedLast: tableObj.bMove == null
     };
-
+    console.log(tableObj);
     this.takenFlag = false;
     this.nextObj = tableObj;
   }
