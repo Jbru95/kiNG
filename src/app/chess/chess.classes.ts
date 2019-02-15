@@ -147,10 +147,6 @@ export class Game {
         //en passant logic also needs to be done
 
         this.turnCounter = parseInt(fenAry[3])
-        console.log("fenAry", fenAry);
-        console.log('turncounter on chess.classes.ts', this.turnCounter);
-        console.log(this.board);
-
     }
 
     genPushFENString(){
@@ -1013,7 +1009,6 @@ export class Game {
     }
 
     performEnPassant(startYpos: number, startXpos: number){  // called if castleFlag is true, swaps appropriate pieces and resets flags
-        console.log(startYpos, startXpos);
         if(this.wEnPassantXpos !== null){ //B performing en passant
 
             this.board[startYpos][startXpos] = new Piece(startXpos, startYpos, "X", "X");
@@ -1058,26 +1053,20 @@ export class Game {
         }
 
         if(this.sqThreatened(kSquare.xpos, kSquare.ypos, oppoColor) == true){//if King is not being threatened, return false automatically
-            console.log("king is not being threatened, shouldnt checkmate");
             return false;
         }
 
         if(this.canBeBlocked(kSquare.xpos, kSquare.ypos, color)){//if check can be blocked by a piece of the same color, also return false, is not checkmate
-            console.log("king is threatened, but the check can be blocked");
             return false
         }
 
         for(let i=0; i<8; i++){//king check
             if( kSquare.ypos + this.kingArray[i][0] > 0 && kSquare.ypos + this.kingArray[i][0] < 8 && kSquare.xpos + this.kingArray[i][1] < 8 && kSquare.xpos + this.kingArray[i][1] > 0){
                 let square = this.board[ kSquare.ypos + this.kingArray[i][0] ][ kSquare.xpos + this.kingArray[i][1] ];
-                console.log(this.kingArray[i]);
-                
-
                 if(this.sqThreatened(square.xpos, square.ypos, oppoColor) == false || this.board[square.ypos][square.xpos].color == color){
                     checkMateBool = true;
                 }
                 else{
-                    console.log("this one is returning false");
                     return false;
                 }
             }

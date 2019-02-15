@@ -47,8 +47,6 @@ export class ChessComponent implements OnChanges{
 
   constructor(private router: Router) { 
     this.game = new Game();
-    console.log(this.game.board);
-    console.log("chess constructor in execution");
   }
   /**
    * ngOnChanges
@@ -56,9 +54,6 @@ export class ChessComponent implements OnChanges{
    * using this to set settings whenever the inputs(settings are changed)
    */
   ngOnChanges(){
-    console.log('chess component ngOnChanges');
-    console.log(this.modeSelection, this.clockTime, this.addedTime );
-
     this.configureTime(this.clockTime, this.addedTime);
     this.configureMode(this.modeSelection);
   }
@@ -83,7 +78,6 @@ export class ChessComponent implements OnChanges{
   }
 
   gameNav(command: number){
-    console.log(this.FENIndex);
     if(command == -2){ //beginning
       this.FENIndex = 0;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
@@ -110,7 +104,6 @@ export class ChessComponent implements OnChanges{
         turn : parseInt(FENString.charAt(FENString.length - 1)),
         whiteMovedLast : !FENString.includes(' w ')
       }
-      console.log(this.currentRowObj);
       this.fastForwardMoveTableBool = true;
     }
     else if (command == 2){ //end
@@ -121,7 +114,6 @@ export class ChessComponent implements OnChanges{
         turn : this.game.whiteTurn == true ? parseInt(FENString.charAt(FENString.length - 1)) + 1 : parseInt(FENString.charAt(FENString.length - 1)),
         whiteMovedLast : !FENString.includes(' w ')
       }
-      console.log(this.currentRowObj);
       this.fastForwardMoveTableBool = true;
     }
   }
@@ -199,8 +191,6 @@ export class ChessComponent implements OnChanges{
       this.game.whiteTurn = false;
       
       if(this.game.checkSafeWKing() == false){
-        console.log('w king not safe');
-        console.log('reverting to ', this.game.FENPositionStack[this.game.FENPositionStack.length-1]);
         this.game.createFENBoard(this.game.FENPositionStack[this.game.FENPositionStack.length-1])
       }
       else{
@@ -216,7 +206,6 @@ export class ChessComponent implements OnChanges{
         this.game.genPushFENString();
         this.sendNextRowObj(secondCopy);
         this.FENIndex = this.game.FENPositionStack.length-1;
-        console.log(this.game.FENPositionStack);
         this.timerChar = "B";
         this.fastForwardMoveTableBool = false;
         if(this.game.checkCheckmate("B") == true){ //check to see if black is checkmated
@@ -236,8 +225,6 @@ export class ChessComponent implements OnChanges{
       this.game.whiteTurn = true;
 
       if(this.game.checkSafeBKing() == false){
-        console.log('b king not safe');
-        console.log('reverting to ', this.game.FENPositionStack[this.game.FENPositionStack.length-1]);
         this.game.createFENBoard(this.game.FENPositionStack[this.game.FENPositionStack.length-1]);
       }
       else{
@@ -256,7 +243,6 @@ export class ChessComponent implements OnChanges{
         this.game.turnCounter += 1;
         this.FENIndex = this.game.FENPositionStack.length-1;
         this.fastForwardMoveTableBool = false;
-        console.log(this.game.FENPositionStack);
         if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
           this.game.winner = "B";
           this.winnerDialogueDisplay = "block";
@@ -273,7 +259,6 @@ export class ChessComponent implements OnChanges{
     if( this.FENIndex != this.game.FENPositionStack.length - 1 || (this.FENIndex == 0 && this.game.FENPositionStack.length == 0) ) { //only accept a move if the game is up to the current level
       return null;
     }
-    console.log(this.game.board[j][i]);
     if( this.selected[0]=== null && this.selected[1] ===null){// if nothing is selected, select the clicked square
       if( (this.game.whiteTurn == true && this.game.board[j][i].color =='W') || (this.game.whiteTurn == false && this.game.board[j][i].color == "B")){//only select your own pieces
         this.game.board[j][i].squareColor = 'green';
@@ -335,8 +320,6 @@ export class ChessComponent implements OnChanges{
             this.game.whiteTurn = false;
             
             if(this.game.checkSafeWKing() == false){
-              console.log('w king not safe');
-              console.log('reverting to ', this.game.FENPositionStack[this.game.FENPositionStack.length-1]);
               this.game.createFENBoard(this.game.FENPositionStack[this.game.FENPositionStack.length-1])
             }
             else{
@@ -353,7 +336,6 @@ export class ChessComponent implements OnChanges{
               this.sendNextRowObj(secondCopy);
               this.timerChar = "B";
               this.FENIndex = this.game.FENPositionStack.length-1;
-              console.log(this.game.FENPositionStack);
               this.fastForwardMoveTableBool = false;
               if(this.game.checkCheckmate("B") == true){ //check to see if black is checkmated
                 this.game.winner = "W";
@@ -420,10 +402,7 @@ export class ChessComponent implements OnChanges{
             let secondCopy = this.second;
             this.second = [null,null];
             this.game.whiteTurn = true;
-            console.log("in else", "checking game.checksafeking, result: ", this.game.checkSafeBKing());
             if(this.game.checkSafeBKing() == false){
-              console.log('b king not safe');
-              console.log('reverting to ', this.game.FENPositionStack[this.game.FENPositionStack.length-1]);
               this.game.createFENBoard(this.game.FENPositionStack[this.game.FENPositionStack.length-1]);
             }
             else{
@@ -442,7 +421,6 @@ export class ChessComponent implements OnChanges{
               this.game.turnCounter += 1;
               this.FENIndex = this.game.FENPositionStack.length-1;
               this.fastForwardMoveTableBool = false;
-              console.log(this.game.FENPositionStack);
               if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
                 this.game.winner = "B";
                 this.winnerDialogueDisplay = "block";
