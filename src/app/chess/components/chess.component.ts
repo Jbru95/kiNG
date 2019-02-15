@@ -78,6 +78,7 @@ export class ChessComponent implements OnChanges{
   }
 
   gameNav(command: number){
+    this.fastForwardMoveTableBool = true;
     if(command == -2){ //beginning
       this.FENIndex = 0;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
@@ -85,7 +86,6 @@ export class ChessComponent implements OnChanges{
         turn : 0,
         whiteMovedLast : false
       }
-
     }
     else if(command == -1){ // back one
       this.FENIndex = this.FENIndex - 1;
@@ -104,17 +104,15 @@ export class ChessComponent implements OnChanges{
         turn : parseInt(FENString.charAt(FENString.length - 1)),
         whiteMovedLast : !FENString.includes(' w ')
       }
-      this.fastForwardMoveTableBool = true;
     }
     else if (command == 2){ //end
       this.FENIndex = this.game.FENPositionStack.length - 1;
       this.game.createFENBoard(this.game.FENPositionStack[this.FENIndex]);
       let FENString = this.game.FENPositionStack[this.FENIndex];
       this.currentRowObj = {
-        turn : this.game.whiteTurn == true ? parseInt(FENString.charAt(FENString.length - 1)) + 1 : parseInt(FENString.charAt(FENString.length - 1)),
+        turn : parseInt(FENString.charAt(FENString.length - 1)),
         whiteMovedLast : !FENString.includes(' w ')
       }
-      this.fastForwardMoveTableBool = true;
     }
   }
 
@@ -203,11 +201,14 @@ export class ChessComponent implements OnChanges{
 
         this.game.WCheck = false; //else of CHeckSafeWKing, so WK is safe, turn off Wcheck
         this.game.checkSetCastleBools();
+        if( this.fastForwardMoveTableBool == true) {
+          console.log('ff is true, so incrementing turnCOunter by 1 ');
+          //this.game.turnCounter += 1;
+        }
         this.game.genPushFENString();
         this.sendNextRowObj(secondCopy);
         this.FENIndex = this.game.FENPositionStack.length-1;
         this.timerChar = "B";
-        this.fastForwardMoveTableBool = false;
         if(this.game.checkCheckmate("B") == true){ //check to see if black is checkmated
           this.game.winner = "W";
           this.winnerDialogueDisplay = "block";
@@ -237,12 +238,15 @@ export class ChessComponent implements OnChanges{
 
         this.game.BCheck = false; //else of CHeckSafeWKing, so BK is safe, turn off Bcheck
         this.game.checkSetCastleBools();
+        if( this.fastForwardMoveTableBool == true) {
+          console.log('ff is true, so incrementing turnCOunter by 1 ');
+          //this.game.turnCounter += 1;
+        }
         this.game.genPushFENString();
         this.sendNextRowObj(secondCopy);
         this.timerChar = "W";
         this.game.turnCounter += 1;
         this.FENIndex = this.game.FENPositionStack.length-1;
-        this.fastForwardMoveTableBool = false;
         if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
           this.game.winner = "B";
           this.winnerDialogueDisplay = "block";
@@ -332,11 +336,14 @@ export class ChessComponent implements OnChanges{
 
               this.game.WCheck = false; //else of CHeckSafeWKing, so WK is safe, turn off Wcheck
               this.game.checkSetCastleBools();
+              if( this.fastForwardMoveTableBool == true) {
+                console.log('ff is true, so incrementing turnCOunter by 1 ');
+                this.game.turnCounter += 1;
+              }
               this.game.genPushFENString();
               this.sendNextRowObj(secondCopy);
               this.timerChar = "B";
               this.FENIndex = this.game.FENPositionStack.length-1;
-              this.fastForwardMoveTableBool = false;
               if(this.game.checkCheckmate("B") == true){ //check to see if black is checkmated
                 this.game.winner = "W";
                 this.winnerDialogueDisplay = "block";
@@ -415,12 +422,15 @@ export class ChessComponent implements OnChanges{
 
               this.game.BCheck = false; //else of CHeckSafeWKing, so BK is safe, turn off Bcheck
               this.game.checkSetCastleBools();
+              if( this.fastForwardMoveTableBool == true) {
+                console.log('ff is true, so incrementing turnCOunter by 1 ');
+                //this.game.turnCounter += 1;
+              }
               this.game.genPushFENString();
               this.sendNextRowObj(secondCopy);
               this.timerChar = "W";
               this.game.turnCounter += 1;
               this.FENIndex = this.game.FENPositionStack.length-1;
-              this.fastForwardMoveTableBool = false;
               if(this.game.checkCheckmate("W") == true){ //check to see if white is checkmated
                 this.game.winner = "B";
                 this.winnerDialogueDisplay = "block";
@@ -456,16 +466,14 @@ export class ChessComponent implements OnChanges{
     const fileArray = ['a','b','c','d','e','f','g','h'];
     const rankArray = ['8','7','6','5','4','3','2','1'];
     let move: string = "";
+
+    this.fastForwardMoveTableBool = false;
+
     const tableObj = {
       turn: this.game.turnCounter,
       wMove: null,
       bMove: null
     };
-
-    if( this.fastForwardMoveTableBool == true) {
-      tableObj.turn = this.currentRowObj.turn;
-    }
-
 
     if( this.game.castleFlag != null ) {
       move = this.game.castleFlag[1] + ' O-O';
@@ -492,6 +500,7 @@ export class ChessComponent implements OnChanges{
     };
     console.log(tableObj);
     this.takenFlag = false;
+    console.log(this.game.FENPositionStack);
     this.nextObj = tableObj;
   }
 }

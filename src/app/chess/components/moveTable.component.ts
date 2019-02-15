@@ -40,9 +40,9 @@ export class MoveTableComponent implements OnChanges{
     }
 
     ngOnChanges(){
-
+        console.log('in moveTable changes,  currentRowObj: ', this.currentRowObj, ' , nextObj: ', this.nextObj);
         if ( this.nextObj != undefined && this.nextObj != this.lastObj ) {
-
+            console.log('pushing nextObj onto table data');
             if ( this.dataSource.length == 0 ) {
                 this.dataSource.push(this.nextObj);    
             }

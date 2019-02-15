@@ -32,16 +32,13 @@ export class timerComponent implements OnChanges{
     }
 
     ngOnChanges(){
-        console.log("clockTime: ", this.clockTime, "timerOn: ", this.timerOn, "whiteSeconds: ", this.whiteSeconds);
 
         if(this.whiteSeconds == undefined && this.clockTime != '0'){
             this.whiteSeconds = parseInt(this.clockTime)*60;
             this.blackSeconds = parseInt(this.clockTime)*60;
-            console.log('white and black seconds set to ', this.whiteSeconds);
         }
 
         this.updateDisplayTime();
-        console.log(this.timerChar);
         this.startBlackTime();
         this.startWhiteTime();
     }
