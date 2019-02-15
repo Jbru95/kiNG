@@ -15,13 +15,6 @@
         </div>
       </div>
 
-      <div class="gameNav btn-group">
-        <button class="btn btn-primary" (click)="gameNav(-2)" [disabled]="FENIndex == 0" >&lt;&lt;</button>
-        <button class="btn btn-primary" (click)="gameNav(-1)" [disabled]="FENIndex == 0">&lt;</button>
-        <button class="btn btn-primary" (click)="gameNav(1)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;</button>
-        <button class="btn btn-primary" (click)="gameNav(2)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;&gt;</button>
-      </div>
-
       <p *ngIf="this.game.BCheck == true" class="check">Check on Black King! </p>
       <p *ngIf="this.game.WCheck == true" class="check">Check on White King! </p>
       <!--<input [(ngModel)]='FENString' type='text'>
@@ -32,6 +25,13 @@
 
       <div style="height: 27%">
         <moveTable [nextObj]="this.nextObj" [currentRowObj]="currentRowObj"></moveTable>
+      </div>
+
+      <div class="gameNav btn-group" style="margin-bottom: 25px;">
+        <button class="btn btn-primary" (click)="gameNav(-2)" [disabled]="FENIndex == 0" >&lt;&lt;</button>
+        <button class="btn btn-primary" (click)="gameNav(-1)" [disabled]="FENIndex == 0">&lt;</button>
+        <button class="btn btn-primary" (click)="gameNav(1)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;</button>
+        <button class="btn btn-primary" (click)="gameNav(2)"  [disabled]="FENIndex == game.FENPositionStack.length - 1">&gt;&gt;</button>
       </div>
 
       <div class="border border-primary rounded align-middle">
