@@ -9,7 +9,7 @@
         <div class='game_board'>
           <div class='gameRow' *ngFor="let row of game.board; let i=index">
             <div class='square' (click)="selectSquare(i,j)" *ngFor='let sq of row; let j=index' [style.background-color]='game.board[j][i].squareColor'>
-              <img class="piece"  [style.opacity]="this.setOpacity(i,j)"  src="/src/assets/{{game.board[j][i].color}}{{game.board[j][i].type}}.png">
+              <img class="piece"  [style.opacity]="this.setOpacity(i,j)"  src="src/app/chess/images/{{game.board[j][i].color}}{{game.board[j][i].type}}.png">
             </div>
           </div>
         </div>
