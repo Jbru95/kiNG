@@ -19,14 +19,14 @@
                     </select>
                 </div>
                 <p></p>
-                <div style="display: inline-block">
+                <!-- <div style="display: inline-block">
                     <label for="addedTime">Time Added Per Move(Seconds):  </label>
                     <select class="form-control" [(ngModel)]='settingsModel.addedTime' name="addedTime" id='addedTime'>
                         <option *ngFor="let time of addedTimeArray" [value]='time'>{{time}}</option>
                     </select>
-                </div>
+                </div> -->
 
-                <h5 style="margin-top: 15px;">Current Time Settings: {{settingsModel.clockTime}}|{{settingsModel.addedTime}}</h5>
+                <h5 style="margin-top: 15px;">Current Time Settings: {{settingsModel.clockTime}} Minutes</h5><!--|{{settingsModel.addedTime}}-->
                 <div class="form-group">
                     <mat-radio-group [(ngModel)]="settingsModel.mode" name="mode">
                         <label>2 Player Mode: </label>
@@ -34,9 +34,9 @@
                         <p></p>
                         <p></p>
                         <label>1 Player Mode: </label> 
-                        <mat-radio-button value="1">Easy </mat-radio-button>
-                        <mat-radio-button value="2">Medium </mat-radio-button>
-                        <mat-radio-button value="3">Hard </mat-radio-button>
+                        <mat-radio-button value="1"> </mat-radio-button><!--Easy-->
+                        <!-- <mat-radio-button value="2">Medium </mat-radio-button>
+                        <mat-radio-button value="3">Hard </mat-radio-button> -->
                     </mat-radio-group>
                 </div>
 

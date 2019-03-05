@@ -156,12 +156,12 @@ export class ChessComponent implements OnChanges{
     }
     if(this.modeSelection == 1){//easy mode, select random square until your turn is over(color is back to players color)
       //this.sleep(500);
-      if(this.onePlayerColor == "W" || this.AIMode == true){
+      if(this.onePlayerColor == "W" ){ // || this.AIMode == true
         while(this.game.whiteTurn == false){
           this.selectSquare(Math.floor(7.99*Math.random()), Math.floor(7.99*Math.random()));
         }
       }
-      if(this.onePlayerColor == "B" || this.AIMode == true){
+      if(this.onePlayerColor == "B" ){ // || this.AIMode == true
         while(this.game.whiteTurn == true){
           this.selectSquare(Math.floor(7.9999*Math.random()), Math.floor(7.9999*Math.random()));
         }
@@ -355,7 +355,11 @@ export class ChessComponent implements OnChanges{
                 this.game.BCheck = true;
               }
               if(this.onePlayerColor == "W" || this.AIMode == true) {
-                this.makeAIMove("B");
+                let that = this;
+                setTimeout( 
+                  function(){  that.makeAIMove("B"); }
+                  ,0
+                );
               }
             }
           }
@@ -442,7 +446,11 @@ export class ChessComponent implements OnChanges{
                 this.game.WCheck = true; 
               }
               if(this.onePlayerColor == "B" || this.AIMode == true) {
-                this.makeAIMove("W");
+                let that = this;
+                setTimeout( 
+                  function(){  that.makeAIMove("W"); }
+                  ,0
+                );
               }
             }
           }
@@ -463,6 +471,7 @@ export class ChessComponent implements OnChanges{
   }
 
   sendNextRowObj(secondCopy): void{
+    console.log('in sendNextRowObj');
     const fileArray = ['a','b','c','d','e','f','g','h'];
     const rankArray = ['8','7','6','5','4','3','2','1'];
     let move: string = "";
@@ -498,7 +507,7 @@ export class ChessComponent implements OnChanges{
       turn: tableObj.turn,
       whiteMovedLast: tableObj.bMove == null
     };
-    console.log(tableObj);
+    console.log(tableObj, this.currentRowObj);
     this.takenFlag = false;
     console.log(this.game.FENPositionStack);
     this.nextObj = tableObj;

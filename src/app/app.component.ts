@@ -33,8 +33,8 @@ export class AppComponent {
 
   recieveBackEmit($event){
     console.log("in back emit, recieved: ", $event);
-    this.chessDisplay ="none";
-    this.setupDisplay ="block";
+    this.chessDisplay = "none";
+    this.setupDisplay = "block";
   }
 
 
